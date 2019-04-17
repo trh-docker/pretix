@@ -1,8 +1,7 @@
 # Pretix
 ## Ticketing software that cares about your event—all the way.
 
-ttps://pretix.eu/about/en/
-
+https://pretix.eu/about/en/
 
 Free and Open Source Software
 Focus on privacy and security

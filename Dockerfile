@@ -50,7 +50,7 @@ RUN pip3 install -U \
     pip \
     setuptools \
     wheel && \
-    cd /pretix/src && \
+    cd /opt/tlm/pretix/src && \
     pip3 install \
     -r requirements.txt \
     -r requirements/memcached.txt \
