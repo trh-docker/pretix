@@ -62,7 +62,7 @@ RUN pip3 install -U \
     rm -rf ~/.cache/pip
 COPY files/pretix/pretix.bash /usr/local/bin/pretix
 COPY --from=source /opt/tlm/pretix/deployment/docker/supervisord.conf /etc/supervisord.conf
-COPY --from=source /opt/tlm/pretix/deployment/docker/nginx.conf /etc/nginx/nginx.conf
+COPY files/pretix/nginx.conf /etc/nginx/nginx.conf
 COPY --from=source /opt/tlm/pretix/deployment/docker/production_settings.py /opt/tlm/pretix/src/production_settings.py
 COPY --from=source /opt/tlm/pretix/src /opt/tlm/pretix/src
 
@@ -74,7 +74,7 @@ RUN chmod +x /usr/local/bin/pretix && \
     chown -R pretixuser:pretixuser /opt/tlm/pretix /opt/tlm/data data && \
     sudo -u pretixuser make production
 
-USER pretixuser
+# USER pretixuser
 VOLUME ["/etc/pretix", "/opt/tlm/data"]
 EXPOSE 80
 ENTRYPOINT ["pretix"]
