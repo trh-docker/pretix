@@ -35,10 +35,10 @@ RUN apt-get update && \
     locale-gen C.UTF-8 && \
     /usr/sbin/update-locale LANG=C.UTF-8 && \
     mkdir /etc/pretix && \
-    mkdir /data && \
-    useradd -ms /bin/bash -d /pretix -u 15371 pretixuser && \
+    mkdir /opt/tlm/data && \
+    useradd -ms /bin/bash -d /opt/tlm/pretix -u 15371 pretixuser && \
     echo 'pretixuser ALL=(ALL) NOPASSWD: /usr/bin/supervisord' >> /etc/sudoers && \
-    mkdir /static &&\
+    mkdir /opt/tlm/static &&\
     apt-get autoclean && apt-get autoremove &&\
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
@@ -60,7 +60,7 @@ RUN pip3 install -U \
     -r requirements/redis.txt \
     gunicorn && \
     rm -rf ~/.cache/pip
-COPY --from=source /opt/tlm/pretix/deployment/docker/pretix.bash /usr/local/bin/pretix
+COPY files/pretix/pretix.bash /usr/local/bin/pretix
 COPY --from=source /opt/tlm/pretix/deployment/docker/supervisord.conf /etc/supervisord.conf
 COPY --from=source /opt/tlm/pretix/deployment/docker/nginx.conf /etc/nginx/nginx.conf
 COPY --from=source /opt/tlm/pretix/deployment/docker/production_settings.py /opt/tlm/pretix/src/production_settings.py
