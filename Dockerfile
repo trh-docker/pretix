@@ -59,8 +59,8 @@ RUN chmod +x /usr/local/bin/pretix && \
     chown -R pretixuser:pretixuser /opt/tlm/pretix /opt/tlm/data data && \
     sudo -u pretixuser make production
 
-USER pretixuser
-VOLUME ["/etc/pretix", "/opt/tlm/data"]
-EXPOSE 80
-ENTRYPOINT ["pretix"]
-CMD ["all"]
+# USER pretixuser
+# VOLUME ["/etc/pretix", "/opt/tlm/data"]
+EXPOSE 80 8080
+# ENTRYPOINT ["pretix"]
+# CMD ["all"]
