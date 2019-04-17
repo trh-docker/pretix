@@ -61,7 +61,7 @@ RUN chmod +x /usr/local/bin/pretix && \
     
 
 USER pretixuser
-# VOLUME ["/etc/pretix", "/opt/tlm/data"]
+VOLUME ["/etc/pretix", "/opt/tlm/data"]
 EXPOSE 80 8080
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/opt/bin/entry.sh"]
