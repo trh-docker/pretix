@@ -2,5 +2,5 @@
 cd /opt/tlm/pretix/src 
 make production
 # sudo -u pretixuser make production
-sudo -u root /usr/sbin/nginx &
-/usr/local/bin/pretix /opt/tlm/data
+/usr/local/bin/pretix /opt/tlm/data &
+sudo -u root /usr/sbin/nginx 
