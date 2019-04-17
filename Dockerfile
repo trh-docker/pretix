@@ -50,9 +50,10 @@ COPY --from=source /opt/tlm/pretix/deployment/docker/supervisord.conf /etc/super
 COPY files/pretix/nginx.conf /etc/nginx/nginx.conf
 COPY --from=source /opt/tlm/pretix/deployment/docker/production_settings.py /opt/tlm/pretix/src/production_settings.py
 COPY --from=source /opt/tlm/pretix/src /opt/tlm/pretix/src
-
+ADD files/Bash/entry.sh /opt/bin
 RUN chmod +x /usr/local/bin/pretix && \
     rm /etc/nginx/sites-enabled/default && \
+    chmod +x /opt/bin/entry.sh &&\
     cd /opt/tlm/pretix/src && \
     rm -f pretix.cfg && \
     mkdir -p data && \
@@ -62,5 +63,5 @@ RUN chmod +x /usr/local/bin/pretix && \
 # USER pretixuser
 # VOLUME ["/etc/pretix", "/opt/tlm/data"]
 EXPOSE 80 8080
-# ENTRYPOINT ["pretix"]
-# CMD ["all"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["/opt/bin/entry.sh"]
