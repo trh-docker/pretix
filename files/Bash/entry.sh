@@ -1,6 +1,6 @@
 #!/usr/bin/dumb-init /bin/sh
+cd /opt/tlm/pretix/src 
+make all
 
-/usr/local/bin/pretix webworker &
-sleep 5
-/usr/local/bin/pretix taskworker &
-/usr/sbin/nginx
+/usr/sbin/nginx &
+/usr/local/bin/pretix /opt/tlm/data

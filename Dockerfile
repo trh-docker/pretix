@@ -60,7 +60,7 @@ RUN chmod +x /usr/local/bin/pretix && \
     chown -R pretixuser:pretixuser /opt/tlm/pretix /opt/tlm/data data && \
     sudo -u pretixuser make production
 
-# USER pretixuser
+USER pretixuser
 # VOLUME ["/etc/pretix", "/opt/tlm/data"]
 EXPOSE 80 8080
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
