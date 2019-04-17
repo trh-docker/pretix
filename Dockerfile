@@ -1,3 +1,5 @@
+FROM quay.io/spivegin/caddy_only AS caddy-source
+
 FROM quay.io/spivegin/tlmbasedebian:latest as source
 WORKDIR /opt/tlm/
 RUN apt-get update && apt-get install -y git &&\
@@ -6,41 +8,24 @@ RUN apt-get update && apt-get install -y git &&\
 RUN git clone https://github.com/pretix/pretix.git
 
 
-FROM quay.io/spivegin/tlmpython:latest
+FROM quay.io/spivegin/pretixbase:latest
 WORKDIR /opt/tlm/
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential \
-    default-libmysqlclient-dev \
-    gettext \
-    git \
-    libffi-dev \
-    libjpeg-dev \
-    libmemcached-dev \
-    libpq-dev \
-    libssl-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    locales \
-    nginx \
-    python-dev \
-    python-virtualenv \
-    python3-dev \
-    sudo \
-    supervisor \
-    zlib1g-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    dpkg-reconfigure locales && \
-    locale-gen C.UTF-8 && \
-    /usr/sbin/update-locale LANG=C.UTF-8 && \
-    mkdir /etc/pretix && \
-    mkdir /opt/tlm/data && \
-    useradd -ms /bin/bash -d /opt/tlm/pretix -u 15371 pretixuser && \
-    echo 'pretixuser ALL=(ALL) NOPASSWD: /usr/bin/supervisord' >> /etc/sudoers && \
-    mkdir /opt/tlm/static &&\
-    apt-get autoclean && apt-get autoremove &&\
-    rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+# Setting up Caddy Server, AFZ Cert and installing dumb-init
+ENV DINIT=1.2.2 \
+    DOMAIN=0.0.0.0 \
+    PORT=80 
+
+ADD https://raw.githubusercontent.com/adbegon/pub/master/AdfreeZoneSSL.crt /usr/local/share/ca-certificates/
+ADD https://github.com/Yelp/dumb-init/releases/download/v${DINIT}/dumb-init_${DINIT}_amd64.deb /tmp/dumb-init_amd64.deb
+COPY --from=caddy-source /opt/bin/caddy /opt/bin/
+ADD files/Caddy/Caddyfile /opt/caddy/
+
+RUN update-ca-certificates --verbose &&\
+    chmod +x /opt/bin/caddy &&\
+    ln -s /opt/bin/caddy /bin/caddy &&\
+    dpkg -i /tmp/dumb-init_amd64.deb && \
+    mkdir -p /opt/bin /opt/caddy &&\
+    apt-get autoclean && apt-get autoremove
 
 ENV LC_ALL=C.UTF-8 \
     DJANGO_SETTINGS_MODULE=production_settings

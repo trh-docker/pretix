@@ -1,0 +1,8 @@
+    
+{$DOMAIN}:{$PORT} {
+    root /opt/tlm/html/lhc_web
+    fastcgi / /run/php/php7.0-fpm.sock php
+    rewrite {
+        to {path} {path}/ /index.php?{query}
+    }
+}
