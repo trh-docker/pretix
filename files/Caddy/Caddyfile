@@ -1,8 +1,16 @@
     
 {$DOMAIN}:{$PORT} {
-    root /opt/tlm/html/lhc_web
-    fastcgi / /run/php/php7.0-fpm.sock php
-    rewrite {
-        to {path} {path}/ /index.php?{query}
+    proxy / localhost:8345 {
+        header_upstream Host {host}
+        header_upstream X-Real-IP {remote}
+        header_upstream X-Forwarded-For {remote}
+        header_upstream X-Forwarded-Port {server_port}
+        header_upstream X-Forwarded-Proto {scheme}
     }
+}
+{$DOMAIN}:{$PORT}/media/ {
+    root / /opt/tlm/media/
+}
+{$DOMAIN}:{$PORT}/static/ {
+    root / /opt/tlm/pretix/src/pretix/static.dist/
 }
