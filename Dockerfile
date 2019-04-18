@@ -28,7 +28,8 @@ RUN update-ca-certificates --verbose &&\
     apt-get autoclean && apt-get autoremove
 
 ENV LC_ALL=C.UTF-8 \
-    DJANGO_SETTINGS_MODULE=production_settings
+    DJANGO_SETTINGS_MODULE=production_settings \
+    PRETIX_CONFIG_FILE=/opt/tlm/
 RUN mkdir -p /opt/tlm/pretix/src && chown -R pretixuser:pretixuser /opt/tlm
 # To copy only the requirements files needed to install from PIP
 COPY --from=source /opt/tlm/pretix/src/requirements /opt/tlm/pretix/src/requirements
@@ -51,6 +52,7 @@ COPY files/pretix/nginx.conf /etc/nginx/nginx.conf
 COPY --from=source /opt/tlm/pretix/deployment/docker/production_settings.py /opt/tlm/pretix/src/production_settings.py
 COPY --from=source /opt/tlm/pretix/src /opt/tlm/pretix/src
 ADD files/Bash/entry.sh /opt/bin
+ADD files/pretix/pretix.cfg /opt/tlm/
 RUN chmod +x /usr/local/bin/pretix && \
     rm /etc/nginx/sites-enabled/default && \
     chmod +x /opt/bin/entry.sh &&\
