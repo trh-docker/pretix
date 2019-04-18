@@ -49,7 +49,7 @@ RUN pip3 install -U \
     rm -rf ~/.cache/pip
 COPY files/pretix/pretix.bash /usr/local/bin/pretix
 COPY files/pretix/supervisord.conf /etc/supervisord.conf
-COPY files/pretix/nginx.conf /etc/nginx/nginx.conf
+# COPY files/pretix/nginx.conf /etc/nginx/nginx.conf
 COPY files/pretix/production_settings.py /opt/tlm/pretix/src/production_settings.py
 COPY --from=source /opt/tlm/pretix/src /opt/tlm/pretix/src
 ADD files/Bash/entry.sh /opt/bin
