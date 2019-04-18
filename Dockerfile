@@ -56,7 +56,6 @@ ADD files/pretix/pretix.cfg /opt/tlm/
 RUN chmod +x /usr/local/bin/pretix && \
     chmod +x /opt/bin/entry.sh &&\
     cd /opt/tlm/pretix/src && \
-    rm -f pretix.cfg && \
     chown -R pretixuser:pretixuser /opt/tlm
     
 
