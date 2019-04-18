@@ -48,9 +48,9 @@ RUN pip3 install -U \
     gunicorn && \
     rm -rf ~/.cache/pip
 COPY files/pretix/pretix.bash /usr/local/bin/pretix
-COPY --from=source /opt/tlm/pretix/deployment/docker/supervisord.conf /etc/supervisord.conf
+COPY files/pretix/supervisord.conf /etc/supervisord.conf
 COPY files/pretix/nginx.conf /etc/nginx/nginx.conf
-COPY --from=source /opt/tlm/pretix/deployment/docker/production_settings.py /opt/tlm/pretix/src/production_settings.py
+COPY files/pretix/production_settings.py /opt/tlm/pretix/src/production_settings.py
 COPY --from=source /opt/tlm/pretix/src /opt/tlm/pretix/src
 ADD files/Bash/entry.sh /opt/bin
 ADD files/pretix/pretix.cfg /opt/tlm/
