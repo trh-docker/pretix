@@ -12,8 +12,12 @@ FROM quay.io/spivegin/pretixbase:latest
 WORKDIR /opt/tlm/
 # Setting up Caddy Server, AFZ Cert and installing dumb-init
 ENV DINIT=1.2.2 \
-    DOMAIN=0.0.0.0 \
-    PORT=80 
+    DOMAIN=goconnectx.live \
+    LC_ALL=C.UTF-8 \
+    DJANGO_SETTINGS_MODULE=production_settings \
+    PRETIX_CONFIG_FILE=/opt/tlm/pretix.cfg \
+    INSTANCE_NAME=goconnectx.live
+
 
 ADD https://raw.githubusercontent.com/adbegon/pub/master/AdfreeZoneSSL.crt /usr/local/share/ca-certificates/
 ADD https://github.com/Yelp/dumb-init/releases/download/v${DINIT}/dumb-init_${DINIT}_amd64.deb /tmp/dumb-init_amd64.deb
@@ -27,9 +31,6 @@ RUN update-ca-certificates --verbose &&\
     mkdir -p /opt/bin /opt/caddy &&\
     apt-get autoclean && apt-get autoremove
 
-ENV LC_ALL=C.UTF-8 \
-    DJANGO_SETTINGS_MODULE=production_settings \
-    PRETIX_CONFIG_FILE=/opt/tlm/pretix.cfg
 RUN mkdir -p /opt/tlm/pretix/src && chown -R pretixuser:pretixuser /opt/tlm
 # To copy only the requirements files needed to install from PIP
 COPY --from=source /opt/tlm/pretix/src/requirements /opt/tlm/pretix/src/requirements
