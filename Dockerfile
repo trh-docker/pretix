@@ -55,7 +55,7 @@ COPY --from=source /opt/tlm/pretix/src /opt/tlm/pretix/src
 ADD files/Bash/entry.sh /opt/bin
 ADD files/pretix/pretix.cfg /opt/tlm/
 RUN chmod +x /usr/local/bin/pretix && \
-    rm /etc/nginx/sites-enabled/default && \
+    # rm /etc/nginx/sites-enabled/default && \
     chmod +x /opt/bin/entry.sh &&\
     cd /opt/tlm/pretix/src && \
     rm -f pretix.cfg && \
