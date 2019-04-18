@@ -19,3 +19,7 @@ If you want to use or extend pretix, we strongly recommend to follow our blog. W
 To get started using pretix on your own server, look at the installation guide in our documentation.
 
 This project is 100 percent free and open source software. If you are interested in commercial support, hosting services or supporting this project financially, please go to pretix.eu or contact us at support@pretix.eu.
+
+
+
+#not working

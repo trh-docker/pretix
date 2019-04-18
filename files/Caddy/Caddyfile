@@ -1,5 +1,5 @@
 {$DOMAIN}:{$PORT} {
-    proxy / localhost:80 {
+    proxy / unix:///tmp/supervisor.sock {
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}
         header_upstream X-Forwarded-For {remote}
