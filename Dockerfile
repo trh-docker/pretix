@@ -29,7 +29,7 @@ RUN update-ca-certificates --verbose &&\
 
 ENV LC_ALL=C.UTF-8 \
     DJANGO_SETTINGS_MODULE=production_settings \
-    PRETIX_CONFIG_FILE=/opt/tlm/
+    PRETIX_CONFIG_FILE=/opt/tlm/pretix.cfg
 RUN mkdir -p /opt/tlm/pretix/src && chown -R pretixuser:pretixuser /opt/tlm
 # To copy only the requirements files needed to install from PIP
 COPY --from=source /opt/tlm/pretix/src/requirements /opt/tlm/pretix/src/requirements
