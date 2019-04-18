@@ -9,8 +9,8 @@
     }
 }
 {$DOMAIN}:{$PORT}/media/ {
-    root / /opt/tlm/media/
+    root /opt/tlm/media/
 }
 {$DOMAIN}:{$PORT}/static/ {
-    root / /opt/tlm/pretix/src/pretix/static.dist/
+    root /opt/tlm/pretix/src/pretix/static.dist/
 }
