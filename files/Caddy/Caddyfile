@@ -1,6 +1,5 @@
-    
 {$DOMAIN}:{$PORT} {
-    proxy / localhost:8345 {
+    proxy / localhost:80 {
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}
         header_upstream X-Forwarded-For {remote}
